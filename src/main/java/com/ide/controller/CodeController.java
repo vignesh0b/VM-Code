@@ -1,15 +1,20 @@
 package com.ide.controller;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-@ComponentScan("com.ide")
+import com.ide.service.CodeExecutionService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
 public class CodeController {
-    @GetMapping("/")
-    public String home() {
-        return "index";
+
+    @Autowired
+    private CodeExecutionService service;
+
+    @PostMapping("/run")
+    public String runCode(@RequestParam String code,
+                          @RequestParam String language,
+                          @RequestParam(required = false) String input) {
+
+        return service.execute(language, code, input);
     }
 }

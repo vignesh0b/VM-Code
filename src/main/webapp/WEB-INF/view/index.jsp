@@ -56,8 +56,10 @@
 
 <div id="top-bar">
     <select id="language">
-        <option value="javascript">JavaScript</option>
+
         <option value="java">Java</option>
+        <option value="python">Python</option>
+        <option value="c">C</option>
     </select>
 
     <button onclick="runCode()">Run</button>
@@ -67,6 +69,7 @@
     <div id="editor"></div>
 
     <div id="right-panel">
+        <textarea id="input" placeholder="Enter input here..." style="width:100%; height:80px;"></textarea>
         <div id="output">Output will appear here...</div>
     </div>
 </div>
@@ -81,20 +84,65 @@
     require(["vs/editor/editor.main"], function () {
 
         window.editor = monaco.editor.create(document.getElementById("editor"), {
-            value: "// Write your code here",
+            value: `public class Main {
+                       public static void main(String[] args) {
+                           System.out.println("Hello");
+                       }
+                   }`,
             language: "java",
             theme: "vs-dark",
             automaticLayout: true
         });
 
+        document.getElementById("language").addEventListener("change", function () {
+            let lang = this.value;
+
+            monaco.editor.setModelLanguage(editor.getModel(), lang);
+
+            if (lang === "java") {
+                editor.setValue(
+        `public class Main {
+            public static void main(String[] args) {
+                System.out.println("Hello");
+            }
+        }`);
+            } else if (lang === "python") {
+                editor.setValue(`print("Hello")`);
+            }
+            else if (lang === "c") {
+                editor.setValue(
+            `#include <stdio.h>
+
+            int main() {
+                printf("Hello C");
+                return 0;
+            }`);
+            }
+        });
 
     });
 
     function runCode() {
         let code = editor.getValue();
+        let input = document.getElementById("input").value;
+        let language = document.getElementById("language").value;
 
-        document.getElementById("output").innerText =
-            "Output:\n\n" + code;
+        let formData = new URLSearchParams();
+        formData.append("code", code);
+        formData.append("input", input);
+        formData.append("language", language);
+
+        fetch("run", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: formData
+        })
+        .then(res => res.text())
+        .then(data => {
+            document.getElementById("output").innerText = data;
+        });
     }
 </script>
 
