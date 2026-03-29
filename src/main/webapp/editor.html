@@ -23,33 +23,21 @@
             border-bottom: 1px solid #e5e7eb;
         }
 
-        .title {
-            font-weight: 600;
-        }
-
         .controls {
             display: flex;
             gap: 12px;
             align-items: center;
         }
 
-        /* AI BUTTON */
         .ai-btn {
             background: #10b981;
             color: white;
             border: none;
             padding: 6px 14px;
             border-radius: 999px;
-            font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
         }
 
-        .ai-btn:hover {
-            background: #059669;
-        }
-
-        /* LANGUAGE BUTTON */
         .lang {
             background: #6366f1;
             color: white;
@@ -58,34 +46,13 @@
             border-radius: 8px;
         }
 
-        /* RUN BUTTON */
         .run-btn {
             background: #e11d48;
             color: white;
             border: none;
             padding: 8px 18px;
             border-radius: 12px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
             cursor: pointer;
-            transition: 0.2s;
-            min-width: 95px;
-            justify-content: center;
-        }
-
-        .run-btn:hover {
-            background: #be123c;
-            transform: scale(1.05);
-        }
-
-        .play-icon {
-            width: 0;
-            height: 0;
-            border-left: 10px solid white;
-            border-top: 6px solid transparent;
-            border-bottom: 6px solid transparent;
         }
 
         /* MAIN */
@@ -105,109 +72,135 @@
             background: white;
         }
 
-        textarea {
-            width: 100%;
-            height: 120px;
-            border-radius: 6px;
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
+        /* OUTPUT PANEL */
+        #output {
+    background: #000000;
+    color: #00ff88;
 
-        pre {
-            background: #111;
-            color: #00ff88;
-            padding: 10px;
-            height: 200px;
-            overflow: auto;
-            border-radius: 6px;
-        }
+    padding: 16px;
+    height: 500px;
+    overflow-y: auto;
+
+    border-radius: 12px;
+    border: 1px solid #222;
+
+    font-family: monospace;
+    font-size: 14px;
+    white-space: pre-wrap;
+
+    outline: none;
+    caret-color: #00ff88;
+    line-height: 1.5;
+
+    box-shadow: 0 0 10px rgba(0,255,136,0.2);
+}
     </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
-    <div class="title">Main.java</div>
+    <div>Main.java</div>
 
     <div class="controls">
         <button class="ai-btn">AI</button>
         <button class="lang">JAVA</button>
-
-        <button class="run-btn" onclick="runCode()" id="runBtn">
-            RUN <span class="play-icon"></span>
-        </button>
+        <button class="run-btn" onclick="runCode()">RUN</button>
     </div>
 </div>
 
-<!-- MAIN -->
 <div class="container">
     <div id="editor"></div>
 
     <div class="right">
         <h4>Output</h4>
-        <pre id="output">Click RUN to see output</pre>
+        <pre id="output" contenteditable="true" tabindex="0"></pre>
     </div>
 </div>
 
 <script>
     let editor;
 
-    // Monaco load
+    // Monaco setup
     require.config({
         paths: { vs: 'https://unpkg.com/monaco-editor@latest/min/vs' }
     });
 
     require(["vs/editor/editor.main"], function () {
         editor = monaco.editor.create(document.getElementById("editor"), {
-            value: `public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}`,
+            value: `import java.util.*;
+
+    public class Main {
+        public static void main(String[] args) {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter the name : ");
+            String a = sc.next();
+        }
+    }`,
             language: "java",
             theme: "vs-light",
-
-            // UI cleanup
-            minimap: { enabled: false },
-            glyphMargin: false,
-            folding: false,
-            lineNumbersMinChars: 3
+            minimap: { enabled: false }
         });
     });
 
+    let socket;
+    let isRunning = false;
+    let inputBuffer = "";
+
+    const output = document.getElementById("output");
+
     function runCode() {
-    if (!editor) return;
+        output.innerText = "";
+        output.focus();
 
-    const btn = document.getElementById("runBtn");
-    const outputBox = document.getElementById("output");
+        socket = new WebSocket("ws://localhost:9090/ws");
 
-    btn.innerHTML = "Running...";
-    btn.disabled = true;
-    outputBox.innerText = "Running...";
+        socket.onopen = () => {
+            isRunning = true;
+            socket.send("CODE:" + editor.getValue());
+        };
 
-    const code = editor.getValue();
+        socket.onmessage = (event) => {
+            output.innerText += event.data;
+            output.scrollTop = output.scrollHeight;
+        };
 
-    fetch("/api/run", {
-        method: "POST",
-        headers: {
-            "Content-Type": "text/plain"
-        },
-        body: code
-    })
-    .then(res => res.text())
-    .then(output => {
-        outputBox.innerText = output || "No output";
-    })
-    .catch(err => {
-        console.error(err);
-        outputBox.innerText = "Server error";
-    })
-    .finally(() => {
-        btn.innerHTML = 'RUN <span class="play-icon"></span>';
-        btn.disabled = false;
+        socket.onclose = () => {
+            isRunning = false;
+        };
+    }
+
+    // 🔥 INPUT HANDLER (FINAL FIXED)
+    output.addEventListener("keydown", function (e) {
+
+        if (!isRunning || !socket) return;
+
+        e.preventDefault();
+
+        if (e.key === "Enter") {
+            socket.send(inputBuffer);        // send to Java
+            output.innerText += "\n";        // move cursor
+            inputBuffer = "";
+        }
+
+        else if (e.key === "Backspace") {
+            if (inputBuffer.length > 0) {
+                inputBuffer = inputBuffer.slice(0, -1);
+                output.innerText = output.innerText.slice(0, -1);
+            }
+        }
+
+        else if (e.key.length === 1) {
+            inputBuffer += e.key;
+            output.innerText += e.key;       // show typing
+        }
+
+        output.scrollTop = output.scrollHeight;
     });
-}
+
+    // focus on click
+    output.addEventListener("click", () => output.focus());
+
 </script>
 
 </body>

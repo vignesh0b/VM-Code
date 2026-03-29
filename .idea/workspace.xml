@@ -5,7 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9a81c5a-9d90-44fc-8f4e-b84fdf90fc40" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/conf/server.xml" beforeDir="false" afterPath="$PROJECT_DIR$/conf/server.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/catalina.2026-03-29.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/catalina.2026-03-29.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/localhost.2026-03-29.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/localhost.2026-03-29.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/localhost_access_log.2026-03-29.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logs/localhost_access_log.2026-03-29.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ide/controller/ApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ide/controller/ApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ide/service/execution/DockerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ide/service/execution/DockerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ide/websocket/CodeSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ide/websocket/CodeSocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/editor.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/editor.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/static/css/ide.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/static/css/ide.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/VM-code.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/VM-code.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/VM-code/WEB-INF/classes/com/ide/controller/ApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/VM-code/WEB-INF/classes/com/ide/controller/ApiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/VM-code/WEB-INF/classes/com/ide/service/execution/DockerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/VM-code/WEB-INF/classes/com/ide/service/execution/DockerService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/VM-code/WEB-INF/classes/com/ide/websocket/CodeSocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/VM-code/WEB-INF/classes/com/ide/websocket/CodeSocket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/VM-code/editor.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/VM-code/editor.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/VM-code/static/css/ide.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/VM-code/static/css/ide.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ide/controller/ApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ide/controller/ApiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ide/service/execution/DockerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ide/service/execution/DockerService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ide/websocket/CodeSocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ide/websocket/CodeSocket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,5 +135,16 @@
       <updated>1774602741513</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

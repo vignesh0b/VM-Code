@@ -14,7 +14,9 @@ public class ApiController {
     private DockerService dockerService;
 
     @PostMapping("/run")
-    public String runCode(@RequestBody String code) {
-        return dockerService.runJavaCode(code);
+    public String runCode(@RequestBody Map<String, String> data) {
+        String code = data.get("code");
+        String input = data.get("input");
+        return dockerService.runJavaCode(code, input);
     }
 }

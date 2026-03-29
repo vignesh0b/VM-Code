@@ -8,13 +8,13 @@ import java.nio.file.*;
 @Service
 public class DockerService {
 
-    public String runJavaCode(String code) {
+    public String runJavaCode(String code, String input) {
         try {
             Path path = Paths.get("Main.java");
             Files.write(path, code.getBytes());
 
             ProcessBuilder pb = new ProcessBuilder(
-                    "docker", "run", "--rm",
+                    "docker", "run", "--rm", "-i",
                     "-v", System.getProperty("user.dir") + ":/app",
                     "-w", "/app",
                     "eclipse-temurin:17",
@@ -24,6 +24,15 @@ public class DockerService {
 
             pb.redirectErrorStream(true);
             Process process = pb.start();
+
+            // 🔥 SEND INPUT HERE
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(process.getOutputStream())
+            );
+            writer.write(input);
+            writer.newLine();
+            writer.flush();
+            writer.close();
 
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(process.getInputStream())
@@ -37,7 +46,6 @@ public class DockerService {
             }
 
             process.waitFor();
-
             return output.toString();
 
         } catch (Exception e) {

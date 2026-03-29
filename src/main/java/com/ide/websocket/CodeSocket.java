@@ -12,47 +12,75 @@ public class CodeSocket {
     private BufferedWriter writer;
 
     @OnMessage
-    public void onMessage(Session session, String message) throws Exception {
+    public void onMessage(Session session, String message) {
 
-        if (message.startsWith("CODE:")) {
+        try {
+            // 🔥 FIRST MESSAGE → RUN CODE
+            if (message.startsWith("CODE:")) {
 
-            String code = message.substring(5);
-            Files.write(Paths.get("Main.java"), code.getBytes());
+                String code = message.substring(5);
 
-            ProcessBuilder pb = new ProcessBuilder(
-                    "docker", "run", "--rm", "-i",
-                    "-v", System.getProperty("user.dir") + ":/app",
-                    "-w", "/app",
-                    "eclipse-temurin:17",
-                    "sh", "-c",
-                    "javac Main.java && java Main"
-            );
+                // Save file
+                Files.write(Paths.get("Main.java"), code.getBytes());
 
-            process = pb.start();
+                ProcessBuilder pb = new ProcessBuilder(
+                        "docker", "run", "--rm", "-i",
+                        "-v", System.getProperty("user.dir") + ":/app",
+                        "-w", "/app",
+                        "eclipse-temurin:17",
+                        "sh", "-c",
+                        "javac Main.java && java Main"
+                );
 
-            writer = new BufferedWriter(
-                    new OutputStreamWriter(process.getOutputStream())
-            );
+                pb.redirectErrorStream(true);
 
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream())
-            );
+                process = pb.start();
 
-            new Thread(() -> {
-                try {
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        session.getBasicRemote().sendText(line);
+                // ✅ writer (for input)
+                writer = new BufferedWriter(
+                        new OutputStreamWriter(process.getOutputStream())
+                );
+
+                InputStream is = process.getInputStream();
+
+// 🔥 Read output character-by-character
+                new Thread(() -> {
+                    try {
+                        int ch;
+                        while ((ch = is.read()) != -1) {
+                            session.getBasicRemote().sendText(String.valueOf((char) ch));
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }).start();
+                }).start();
+            }
 
-        } else {
-            writer.write(message);
-            writer.newLine();
-            writer.flush();
+            // 🔥 HANDLE INPUT
+            else {
+                if (writer != null) {
+                    writer.write(message);
+                    writer.newLine();   // 🔥 VERY IMPORTANT
+                    writer.flush();
+                }
+            }
+
+        } catch (Exception e) {
+            try {
+                session.getBasicRemote().sendText("Error: " + e.getMessage());
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @OnClose
+    public void onClose(Session session) {
+        try {
+            if (writer != null) writer.close();
+            if (process != null) process.destroy();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

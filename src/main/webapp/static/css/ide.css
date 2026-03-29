@@ -135,3 +135,20 @@ body.home {
     width: 100%;
   }
 }
+#output {
+    outline: none;
+    caret-color: black;   /* 👈 makes cursor visible */
+    cursor: text;
+}
+
+/* 🔥 blinking cursor effect */
+#output::after {
+    content: "|";
+    animation: blink 1s infinite;
+    margin-left: 2px;
+}
+
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+}
