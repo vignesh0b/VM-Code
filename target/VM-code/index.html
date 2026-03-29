@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VM-Code IDE</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="static/css/ide.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">    <!-- Devicon Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <!-- Mobile responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body class="home">
+<div class="theme-toggle" onclick="toggleTheme()">
+    <i class="fas fa-sun"></i>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+    <h1>Code online with <span>VM Code</span></h1>
+    <p>Write, Run and Debug code instantly </p>
+
+    <input type="text" id="searchInput" placeholder="Search language..." class="search-box">
+</div>
+
+<!-- CATEGORY -->
+<div class="categories">
+    <button onclick="filterCategory('all')">Popular</button>
+    <button onclick="filterCategory('programming')">Programming</button>
+    <button onclick="filterCategory('web')">Web</button>
+    <button onclick="filterCategory('database')">Database</button>
+</div>
+
+<!-- GRID -->
+<div class="grid" id="languageGrid">
+    <div class="card programming" onclick="openIDE('python')">
+        <i class="devicon-python-plain colored"></i>
+        <span>Python</span>
+    </div>
+
+    <div class="card programming" onclick="openIDE('javascript')">
+        <i class="devicon-javascript-plain colored"></i>
+        <span>JavaScript</span>
+    </div>
+
+    <div class="card programming" onclick="openIDE('java')">
+        <i class="devicon-java-plain colored"></i>
+        <span>Java</span>
+    </div>
+
+    <div class="card programming" onclick="openIDE('c')">
+        <i class="devicon-c-plain colored"></i>
+        <span>C</span>
+    </div>
+
+    <div class="card programming" onclick="openIDE('cpp')">
+        <i class="devicon-cplusplus-plain colored"></i>
+        <span>C++</span>
+    </div>
+
+
+<!-- SCRIPT -->
+<script>
+
+    // 🔍 Search filter
+    document.getElementById("searchInput").addEventListener("keyup", function () {
+        let value = this.value.toLowerCase();
+        let cards = document.querySelectorAll(".card");
+
+        cards.forEach(card => {
+            let text = card.innerText.toLowerCase();
+            card.style.display = text.includes(value) ? "flex" : "none";
+        });
+    });
+
+    // 🎯 Category filter (basic)
+    function filterCategory(category) {
+        let cards = document.querySelectorAll(".card");
+
+        cards.forEach(card => {
+            if (category === "all") {
+                card.style.display = "flex";
+            } else {
+                card.style.display = card.classList.contains(category) ? "flex" : "none";
+            }
+        });
+    }
+
+   function openIDE(lang) {
+     window.location.href = "/editor?lang=" + lang;
+   }
+
+</script>
+</body>
+</html>

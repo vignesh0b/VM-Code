@@ -1,0 +1,7 @@
+com\ide\controller\PageController.class
+com\ide\websocket\CodeSocket.class
+com\ide\config\WebConfig.class
+com\ide\service\execution\DockerService.class
+com\ide\config\MyWebAppInitializer.class
+com\ide\config\WebSocketConfig.class
+com\ide\controller\ApiController.class
