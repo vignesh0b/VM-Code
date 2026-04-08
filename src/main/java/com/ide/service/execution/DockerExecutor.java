@@ -1,62 +1,77 @@
 package com.ide.service.execution;
 
+import javax.websocket.Session;
 import java.io.*;
 
-public abstract class DockerExecutor implements CodeExecutor {
+public abstract class DockerExecutor {
 
-    protected String runInDocker(String image, String command, String input) throws Exception {
+    private Process process;
+    private BufferedWriter writer;
+
+    protected Process startContainer(String fileName, String image, String command) throws Exception {
 
         ProcessBuilder pb = new ProcessBuilder(
-                "docker", "run", "--rm",
+                "docker", "run", "-i", "--rm",
                 "--memory=256m",
                 "--cpus=1.0",
                 "--network=none",
-                "-i",   //  IMPORTANT for input
                 "-v", new File("temp").getAbsolutePath().replace("\\", "/") + ":/app",
                 "-w", "/app",
                 image,
                 "sh", "-c", command
         );
 
-        Process process = pb.start();
-
-        //  SEND INPUT
-        if (input != null && !input.isEmpty()) {
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(process.getOutputStream())
-            );
-            writer.write(input);
-            writer.newLine();
-            writer.flush();
-            writer.close();
-        }
-
-        BufferedReader outputReader = new BufferedReader(
-                new InputStreamReader(process.getInputStream())
+        pb.redirectErrorStream(true);
+        process = pb.start();
+        writer = new BufferedWriter(
+                new OutputStreamWriter(process.getOutputStream())
         );
+        return process;
+    }
+    protected void streamOutput(Session session) {
+        new Thread(() -> {
+            try {
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(process.getInputStream())
+                );
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    safeSend(session, line + "\n");
+                }
+                process.waitFor();
+                safeSend(session, "\n[Process Finished]");
+            } catch (Exception e) {
+                safeSend(session, "Error: " + e.getMessage());
+            }
+        }).start();
+    }
 
-        BufferedReader errorReader = new BufferedReader(
-                new InputStreamReader(process.getErrorStream())
-        );
-
-        StringBuilder output = new StringBuilder();
-        String line;
-
-        while ((line = outputReader.readLine()) != null) {
-            output.append(line).append("\n");
+    public void sendInput(String input) {
+        try {
+            if (writer != null) {
+                writer.write(input);
+                writer.newLine();
+                writer.flush();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 
-        while ((line = errorReader.readLine()) != null) {
-            output.append(line).append("\n");
-        }
+    public void stop() {
+        try {
+            if (writer != null) writer.close();
+        } catch (Exception ignored) {}
 
-        boolean finished = process.waitFor(5, java.util.concurrent.TimeUnit.SECONDS);
-
-        if (!finished) {
+        if (process != null && process.isAlive()) {
             process.destroy();
-            return "Execution Timeout (5s)";
         }
+    }
 
-        return output.toString();
+    protected void safeSend(Session session, String msg) {
+        try
+        {
+            session.getBasicRemote().sendText(msg);
+        } catch (Exception ignored) {}
     }
 }

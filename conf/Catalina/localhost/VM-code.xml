@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Context docBase="C:\Users\Mathan.R\Desktop\VM-CODE\target\VM-code">
+<Context docBase="C:/Users/Mathan.R/Desktop/VM-CODE/src/main/webapp">
   <Resources cacheMaxSize="10240">
     <PreResources base="C:/Users/Mathan.R/Desktop/VM-CODE/target/classes" className="org.apache.catalina.webresources.DirResourceSet" webAppMount="/WEB-INF/classes"/>
     <PostResources base="C:/Users/Mathan.R/.m2/repository/org/springframework/spring-webmvc/5.3.30/spring-webmvc-5.3.30.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/spring-webmvc-5.3.30.jar"/>
@@ -11,12 +11,22 @@
     <PostResources base="C:/Users/Mathan.R/.m2/repository/org/springframework/spring-web/5.3.30/spring-web-5.3.30.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/spring-web-5.3.30.jar"/>
     <PostResources base="C:/Users/Mathan.R/.m2/repository/org/springframework/spring-context/5.3.30/spring-context-5.3.30.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/spring-context-5.3.30.jar"/>
     <PostResources base="C:/Users/Mathan.R/.m2/repository/javax/servlet/jstl/1.2/jstl-1.2.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/jstl-1.2.jar"/>
+    <PostResources base="C:/Users/Mathan.R/.m2/repository/com/squareup/okhttp3/okhttp/4.12.0/okhttp-4.12.0.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/okhttp-4.12.0.jar"/>
+    <PostResources base="C:/Users/Mathan.R/.m2/repository/com/squareup/okio/okio/3.6.0/okio-3.6.0.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/okio-3.6.0.jar"/>
+    <PostResources base="C:/Users/Mathan.R/.m2/repository/com/squareup/okio/okio-jvm/3.6.0/okio-jvm-3.6.0.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/okio-jvm-3.6.0.jar"/>
+    <PostResources base="C:/Users/Mathan.R/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-common/1.9.10/kotlin-stdlib-common-1.9.10.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/kotlin-stdlib-common-1.9.10.jar"/>
+    <PostResources base="C:/Users/Mathan.R/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-jdk8/1.8.21/kotlin-stdlib-jdk8-1.8.21.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/kotlin-stdlib-jdk8-1.8.21.jar"/>
+    <PostResources base="C:/Users/Mathan.R/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib/1.8.21/kotlin-stdlib-1.8.21.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/kotlin-stdlib-1.8.21.jar"/>
+    <PostResources base="C:/Users/Mathan.R/.m2/repository/org/jetbrains/annotations/13.0/annotations-13.0.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/annotations-13.0.jar"/>
+    <PostResources base="C:/Users/Mathan.R/.m2/repository/org/jetbrains/kotlin/kotlin-stdlib-jdk7/1.8.21/kotlin-stdlib-jdk7-1.8.21.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/kotlin-stdlib-jdk7-1.8.21.jar"/>
+    <PostResources base="C:/Users/Mathan.R/.m2/repository/org/json/json/20240303/json-20240303.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/json-20240303.jar"/>
     <PostResources base="C:/Users/Mathan.R/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.15.2/jackson-databind-2.15.2.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/jackson-databind-2.15.2.jar"/>
     <PostResources base="C:/Users/Mathan.R/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.15.2/jackson-annotations-2.15.2.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/jackson-annotations-2.15.2.jar"/>
     <PostResources base="C:/Users/Mathan.R/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.15.2/jackson-core-2.15.2.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/jackson-core-2.15.2.jar"/>
     <PostResources base="C:/Users/Mathan.R/.m2/repository/org/springframework/spring-orm/5.3.30/spring-orm-5.3.30.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/spring-orm-5.3.30.jar"/>
     <PostResources base="C:/Users/Mathan.R/.m2/repository/org/springframework/spring-jdbc/5.3.30/spring-jdbc-5.3.30.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/spring-jdbc-5.3.30.jar"/>
     <PostResources base="C:/Users/Mathan.R/.m2/repository/org/springframework/spring-tx/5.3.30/spring-tx-5.3.30.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/spring-tx-5.3.30.jar"/>
+    <PostResources base="C:/Users/Mathan.R/.m2/repository/org/springframework/security/spring-security-crypto/5.8.5/spring-security-crypto-5.8.5.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/spring-security-crypto-5.8.5.jar"/>
     <PostResources base="C:/Users/Mathan.R/.m2/repository/org/hibernate/hibernate-core/5.6.15.Final/hibernate-core-5.6.15.Final.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/hibernate-core-5.6.15.Final.jar"/>
     <PostResources base="C:/Users/Mathan.R/.m2/repository/org/jboss/logging/jboss-logging/3.4.3.Final/jboss-logging-3.4.3.Final.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/jboss-logging-3.4.3.Final.jar"/>
     <PostResources base="C:/Users/Mathan.R/.m2/repository/javax/persistence/javax.persistence-api/2.2/javax.persistence-api-2.2.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/javax.persistence-api-2.2.jar"/>
@@ -37,5 +47,6 @@
     <PostResources base="C:/Users/Mathan.R/.m2/repository/com/google/protobuf/protobuf-java/3.21.9/protobuf-java-3.21.9.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/protobuf-java-3.21.9.jar"/>
     <PostResources base="C:/Users/Mathan.R/.m2/repository/com/zaxxer/HikariCP/5.0.1/HikariCP-5.0.1.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/HikariCP-5.0.1.jar"/>
     <PostResources base="C:/Users/Mathan.R/.m2/repository/org/slf4j/slf4j-api/2.0.0-alpha1/slf4j-api-2.0.0-alpha1.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/slf4j-api-2.0.0-alpha1.jar"/>
+    <PostResources base="C:/Users/Mathan.R/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar" className="org.apache.catalina.webresources.FileResourceSet" webAppMount="/WEB-INF/lib/gson-2.10.1.jar"/>
   </Resources>
 </Context>

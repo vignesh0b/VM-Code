@@ -1,21 +1,29 @@
 package com.ide.service.execution;
 
+import javax.websocket.Session;
+
 import java.io.*;
 
-public class JavaExecutor extends DockerExecutor {
+public class JavaExecutor extends DockerExecutor implements CodeExecutor {
 
     @Override
-    public String execute(String code, String input) throws Exception {
+    public void execute(String code, Session session) throws Exception {
 
-        File file = new File("temp/Main.java");
+        String fileName = "Main.java";
+
+        File file = new File("temp/" + fileName);
         file.getParentFile().mkdirs();
 
-        FileWriter writer = new FileWriter(file);
-        writer.write(code);
-        writer.close();
+        try (FileWriter fw = new FileWriter(file)) {
+            fw.write(code);
+        }
 
-        String command = "javac Main.java && java Main";
+        Process process = startContainer(
+                fileName,
+                "eclipse-temurin:17",
+                "javac Main.java && java Main"
+        );
 
-        return runInDocker("eclipse-temurin:17", command, input);
+        streamOutput(session);
     }
 }

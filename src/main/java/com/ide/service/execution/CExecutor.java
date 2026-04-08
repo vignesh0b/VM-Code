@@ -1,21 +1,28 @@
 package com.ide.service.execution;
 
+import javax.websocket.Session;
 import java.io.*;
 
-public class CExecutor extends DockerExecutor {
+public class CExecutor extends DockerExecutor implements CodeExecutor {
 
     @Override
-    public String execute(String code, String input) throws Exception {
+    public void execute(String code, Session session) throws Exception {
 
-        File file = new File("temp/main.c");
+        String fileName = "main.c";
+
+        File file = new File("temp/" + fileName);
         file.getParentFile().mkdirs();
 
-        FileWriter writer = new FileWriter(file);
-        writer.write(code);
-        writer.close();
+        try (FileWriter fw = new FileWriter(file)) {
+            fw.write(code);
+        }
 
-        String command = "gcc main.c -o main && ./main";
+        Process process = startContainer(
+                fileName,
+                "gcc:latest",
+                "gcc main.c -o main && ./main"
+        );
 
-        return runInDocker("gcc:latest", command, input);
+        streamOutput(session);
     }
 }

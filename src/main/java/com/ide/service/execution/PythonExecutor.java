@@ -1,21 +1,29 @@
 package com.ide.service.execution;
 
-import java.io.*;
+import javax.websocket.Session;
+import java.io.File;
+import java.io.FileWriter;
 
-public class PythonExecutor extends DockerExecutor {
+public class PythonExecutor extends DockerExecutor implements CodeExecutor {
 
     @Override
-    public String execute(String code, String input) throws Exception {
+    public void execute(String code, Session session) throws Exception {
 
-        File file = new File("temp/script.py");
+        String fileName = "main.py";
+
+        File file = new File("temp/" + fileName);
         file.getParentFile().mkdirs();
 
-        FileWriter writer = new FileWriter(file);
-        writer.write(code);
-        writer.close();
+        try (FileWriter fw = new FileWriter(file)) {
+            fw.write(code);
+        }
 
-        String command = "python script.py";
+        startContainer(
+                fileName,
+                "python:3",
+                "python -u main.py"
+        );
 
-        return runInDocker("python:3.10", command, input);
+        streamOutput(session);
     }
 }
